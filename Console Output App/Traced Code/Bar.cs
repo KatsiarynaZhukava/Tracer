@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Tracer_Library.Tracing;
 
@@ -21,24 +22,16 @@ namespace SPP_Tracer.Traced_Code
             _tracer.StartTrace();
 
             AnotherBarMethod();
-
-            for (int i = 0; i < 100000; i++)
-            {
-                int j = i*2;
-            }
+            Thread.Sleep(100);
 
             _tracer.StopTrace();
         }
 
-        internal void AnotherBarMethod()
+        public void AnotherBarMethod()
         {
             _tracer.StartTrace();
 
-            for (int i = 0; i < 1000000; i++)
-            {
-                int j = i * 2;
-            }
-
+            Thread.Sleep(10);
             _tracer.StopTrace();
         }
     }

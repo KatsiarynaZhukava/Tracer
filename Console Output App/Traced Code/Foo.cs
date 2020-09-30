@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Tracer_Library.Tracing;
 
@@ -18,16 +19,44 @@ namespace SPP_Tracer.Traced_Code
             _bar = new Bar(_tracer);
         }
 
-        public void SomeFooMethod()
+        public void FirstFooMethod()
         {
             _tracer.StartTrace();
 
-            for (int i = 0; i < 10000; i++)
-            {
-                int j = i;
-            }
-
+            Thread.Sleep(42);
             _bar.SomeBarMethod();
+
+            _tracer.StopTrace();
+        }
+
+        public void SecondFooMethod()
+        {
+            _tracer.StartTrace();
+
+            Thread.Sleep(100);
+
+            _tracer.StopTrace();
+        }    
+        
+        public void ThirdFooMethod()
+        {
+            _tracer.StartTrace();
+
+            Thread.Sleep(100);
+
+            _tracer.StopTrace();
+        }
+
+        public void Recursion(int i)
+        {
+            _tracer.StartTrace();
+
+            i--;
+            if (i > 0)
+            {
+                Thread.Sleep(100);
+                Recursion(i);
+            }
 
             _tracer.StopTrace();
         }
